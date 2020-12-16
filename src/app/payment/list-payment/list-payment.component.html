@@ -1,0 +1,19 @@
+<h3>{{'Liste : ' + type === 'check' ? 'chèque' : 'espèce'}}</h3>
+<nz-table #basicTable [nzLoading]="loading" [nzData]="payments" [nzShowPagination]="false">
+  <thead>
+  <tr>
+    <th>Provider</th>
+    <th>Date</th>
+    <th *ngIf="type==='check'">Num check</th>
+    <th *ngIf="type==='check'">Date of transaction</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let payment of payments" routerLink="/bill/{{payment.bill.id}}">
+    <td>{{ payment.bill.provider.name }}</td>
+    <td>{{ payment.bill.date|date:'dd-MM-y' }}</td>
+    <td *ngIf="type==='check'">{{ payment.check_number }}</td>
+    <td *ngIf="type==='check'">{{ payment.date|date:'dd-MM-y' }}</td>
+  </tr>
+  </tbody>
+</nz-table>

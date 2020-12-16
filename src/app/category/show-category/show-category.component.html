@@ -1,0 +1,19 @@
+<h3>Category Details</h3>
+<div class="container mt-5" *ngIf="!loading">
+  <h5>Name : {{category.name}}</h5>
+  <div *ngIf="category.products.length != 0">
+    <h5 class="mt-5">products : </h5>
+    <nz-table #basicTable [nzData]="category.products">
+      <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{data.name}}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

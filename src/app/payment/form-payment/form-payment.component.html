@@ -1,0 +1,177 @@
+<nz-spin [nzSpinning]="loading">
+  <h3>{{paymentId ? 'Modifier' : 'Add' + ' payment'}}</h3>
+  <form nz-form (ngSubmit)="submitForm()">
+
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12" [nzOffset]="7">
+        <h4>Payment Method</h4>
+        <nz-switch
+          [(ngModel)]="paymentType1"
+          nzCheckedChildren="$"
+          nzUnCheckedChildren="C" (ngModelChange)="setValidators()" [ngModelOptions]="{standalone:false}"
+        ></nz-switch>
+        <span>  Cash     </span>
+        
+        <nz-switch
+          [(ngModel)]="paymentType"
+          nzCheckedChildren="C"
+          nzUnCheckedChildren="$" (ngModelChange)="setValidators()" [ngModelOptions]="{standalone:true}"
+        ></nz-switch>
+        <span>     Check      </span>
+
+      </nz-form-control>
+    </nz-form-item>
+    <div [formGroup]="paymentForm" *ngIf="paymentType1">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>Amount</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="amountError">
+          <input nz-input formControlName="amount" placeholder="amount"/>
+          <ng-template #amountError let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Field required
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div [formGroup]="paymentForm" *ngIf="paymentType">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>check_number</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="checkNumberError">
+          <input nz-input formControlName="check_number" placeholder="check_number"/>
+          <ng-template #checkNumberError let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Field required
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>deadline</nz-form-label>
+
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="deadlineError">
+          <nz-date-picker [nzFormat]="'dd-MM-yyyy'" formControlName="date"></nz-date-picker>
+
+          <input nz-input formControlName="deadline" *ngIf="false" placeholder="date"/>
+          <ng-template #deadlineError let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Field required
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>date</nz-form-label>
+
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="dateError">
+          <nz-date-picker [nzFormat]="'dd-MM-yyyy'" formControlName="date"></nz-date-picker>
+
+          <input nz-input formControlName="date" *ngIf="false" placeholder="date"/>
+          <ng-template #dateError let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              Field required
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+
+      </nz-form-item>
+
+    </div>
+
+    <ng-container *ngIf="!paymentId">
+      <div>
+        <nz-form-item>
+          <nz-form-control [nzSpan]="12" [nzOffset]="7">
+            <h4>Bill</h4>
+            <span>    Existing bill     </span>
+            <nz-switch [(ngModel)]="newBill" (ngModelChange)="setValidators()"
+                       [ngModelOptions]="{standalone:true}"></nz-switch>
+            <span>      New bill      </span>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!--  <nz-form-control [nzSpan]="12" *ngIf="!newBill" [nzOffset]="7">-->
+
+      <nz-form-item *ngIf="!newBill">
+        <nz-form-control [nzSpan]="12" [nzOffset]="7">
+          <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a bill"
+                     [ngModelOptions]="{standalone:true}"
+                     [(ngModel)]="selectedBill">
+            <nz-option nzLabel="{{bill.provider.name}} {{bill.date|date:'dd-MM-y'}}" nzValue="{{bill.id}}"
+                       *ngFor="let bill of bills"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <!--  </nz-form-control>-->
+
+
+      <!--add here bill form *ngIf="newBill"-->
+      <!--  {{billForm.value|json}}-->
+      <app-form-bill *ngIf="newBill" [paymentType]="paymentType"
+                     (formEmitter)="billForm=$event.billForm;providerForm=$event.providerForm;newProvider=$event.newProvider"></app-form-bill>
+
+    </ng-container>
+    <!--  {{'new bill : ' + newBill}}-->
+    <!--  {{'new provider : ' + newProvider}}-->
+    <!--  {{'bill form valid : ' + billForm.valid}}-->
+    <!--  <br>1-->
+    <!--  {{(-->
+    <!--  (!newBill && selectedBill)-->
+    <!--  || (newBill && billForm.valid && !newProvider)-->
+    <!--  || (!newBill && selectedBill)-->
+    <!--  || (newBill && billForm.valid && newProvider && providerForm.valid)-->
+    <!--)}}-->
+    <!--  <br>2-->
+    <!--  {{  (!newBill && selectedBill)}}-->
+    <!--  <br>3-->
+    <!--  {{  (newBill && billForm.valid && !newProvider)}}-->
+    <!--  <br>4-->
+    <!--  {{  (!newBill && selectedBill)}}-->
+    <!--  <br> 5-->
+    <!--  {{  (newBill && billForm.valid && newProvider && providerForm.valid)}}-->
+
+    <nz-form-item *ngIf="!paymentId">
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary"
+                [disabled]="!(
+                (!paymentType&&
+                  (
+                    (!newBill&&selectedBill)
+                    ||(newBill&&billForm.valid&&!newProvider)
+                    ||(!newBill&&selectedBill)
+                    ||(newBill&&billForm.valid&&newProvider&&providerForm.valid)
+                  )
+                )||
+                (
+                  (paymentType&&paymentForm.valid)&&
+                    (
+                    (!newBill&&selectedBill)
+                    ||(newBill&&billForm.valid&&!newProvider)
+                    ||(!newBill&&selectedBill)
+                    ||(newBill&&billForm.valid&&newProvider&&providerForm.valid)
+                  )
+                  )
+              )"
+        >
+          <!--              [disabled]="!paymentForm.valid&&(!newBill||!billForm.valid)&&(newBill||!selectedBill)"-->
+          Submit
+        </button>
+        <button nz-button (click)="resetForm($event)">Reset</button>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="paymentId">
+      <nz-form-control [nzOffset]="7" [nzSpan]="12">
+        <button nz-button nzType="primary"
+                [disabled]="!(!paymentType||paymentForm.valid)"
+        >
+          <!--              [disabled]="!paymentForm.valid&&(!newBill||!billForm.valid)&&(newBill||!selectedBill)"-->
+          Submit
+        </button>
+        <button nz-button (click)="resetForm($event)">Reset</button>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+</nz-spin>

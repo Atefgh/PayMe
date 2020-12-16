@@ -1,0 +1,21 @@
+<h3>Categories</h3>
+<nz-table [nzLoading]="loading" #basicTable [nzData]="categories">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of basicTable.data">
+    <td>{{data.name}}</td>
+    <td>
+      <a [routerLink]="['/category/', data.id]">Show</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a routerLink="edit/{{data.id}}">Edit</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="delete(data.id)">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>

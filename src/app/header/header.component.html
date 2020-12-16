@@ -1,0 +1,87 @@
+<ul *ngIf="user||true" nz-menu nzMode="inline"
+    style="width: 240px;height: 100vh;display: inline-block;position: fixed;overflow-x: hidden;overflow-y: auto">
+ <!-- <li
+    (nzOpenChange)="openHandler('sub1')"
+    [(nzOpen)]="openMap.sub1"
+    nz-submenu
+    nzIcon="question-circle"
+    nzTitle="Menu"
+  >
+    <ul>
+      <li nz-menu-item routerLink="/">Sub Menu 1</li>
+      <li nz-menu-item routerLink="/">Sub Menu 2</li>
+    </ul> 
+  </li>-->
+ 
+  <li
+    (nzOpenChange)="openHandler('sub1')"
+    [(nzOpen)]="openMap.sub1"
+    nz-submenu
+    nzIcon="dollar-circle"
+    nzTitle="Provider"
+  >
+ 
+    <ul>
+      
+      <li nz-menu-item routerLink="/Provider/List">List</li>
+      <li nz-menu-item routerLink="/Provider/add">Add Provider</li>
+    </ul>
+  </li>
+  <li
+    (nzOpenChange)="openHandler('sub2')"
+    [(nzOpen)]="openMap.sub2"
+    nz-submenu
+    nz-icon nzType="credit-card"
+    nzTitle="Payment"
+  >
+    <ul>
+      <li nz-menu-item routerLink="/payment/cash">Cash</li>
+      <li nz-menu-item routerLink="/payment/check">Check</li>
+      <li nz-menu-item routerLink="/payment/add">Add a payment</li>
+    </ul>
+  </li>
+  <li
+    (nzOpenChange)="openHandler('sub3')"
+    [(nzOpen)]="openMap.sub3"
+    nz-submenu
+    nzIcon="dollar-circle"
+    nzTitle="Product"
+  >
+    <ul>
+      <li nz-menu-item routerLink="/product">List</li>
+    </ul>
+  </li>
+  
+  <li
+    (nzOpenChange)="openHandler('sub4')"
+    [(nzOpen)]="openMap.sub4"
+    nz-submenu
+    nzIcon="dollar-circle"
+    nzTitle="Category"
+  >
+    <ul>
+      <li nz-menu-item routerLink="/category">List</li>
+    </ul>
+    
+  </li>
+  <li
+    (nzOpenChange)="openHandler('sub5')"
+    [(nzOpen)]="openMap.sub5"
+    nz-submenu
+    nzIcon="dollar-circle"
+    nzTitle="Deposit"
+  >
+    <ul>
+      <li nz-menu-item routerLink="/depot/box">Box</li>
+      <li nz-menu-item routerLink="/depot/bank">Bank</li>
+      <li nz-menu-item routerLink="/depot/add">Add deposit</li>
+    </ul>
+  </li>
+  <li *ngIf="false"
+      (click)="logout()"
+      nz-menu-item
+  >
+    <i nz-icon nzType="poweroff"></i>
+    Log Out
+  </li>
+</ul>
